@@ -27,7 +27,7 @@ public class CacheInterceptorAof<K,V> implements ICacheInterceptor<K, V> {
 
     @Override
     public void after(ICacheInterceptorContext<K,V> context) {
-        // 持久化类
+        // 获取持久化类
         ICache<K,V> cache = context.cache();
         ICachePersist<K,V> persist = cache.persist();
 

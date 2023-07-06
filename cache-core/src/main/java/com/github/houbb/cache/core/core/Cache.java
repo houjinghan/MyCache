@@ -260,7 +260,8 @@ public class Cache<K,V> implements ICache<K,V> {
         // 添加拦截器调用
         if(ObjectUtil.isNotNull(evictEntry)) {
             // 执行淘汰监听器
-            ICacheRemoveListenerContext<K,V> removeListenerContext = CacheRemoveListenerContext.<K,V>newInstance().key(evictEntry.key())
+            ICacheRemoveListenerContext<K,V> removeListenerContext = CacheRemoveListenerContext.<K,V>newInstance()
+                    .key(evictEntry.key())
                     .value(evictEntry.value())
                     .type(CacheRemoveType.EVICT.code());
             for(ICacheRemoveListener<K,V> listener : context.cache().removeListeners()) {

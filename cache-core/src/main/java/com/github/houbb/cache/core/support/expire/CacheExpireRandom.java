@@ -125,13 +125,13 @@ public class CacheExpireRandom<K,V> implements ICacheExpire<K,V> {
                 return;
             }
 
-            //2.2 随机过期
+            //2.2 进行随机过期
             K key = getRandomKey();
             Long expireAt = expireMap.get(key);
             boolean expireFlag = expireKey(key, expireAt);
             log.debug("key: {} 过期执行结果 {}", key, expireFlag);
 
-            //2.3 信息更新
+            //2.3 不要超过最大淘汰次数
             count++;
         }
     }
