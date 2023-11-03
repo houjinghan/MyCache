@@ -3,7 +3,7 @@ package com.github.houbb.cache.core.support.evict;
 import com.github.houbb.cache.api.ICacheEvict;
 
 /**
- * 丢弃策略
+ * 选择丢弃策略
  *
  * @author binbin.hou
  * @since 0.0.2

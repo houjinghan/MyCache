@@ -16,8 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存过期-普通策略
- *
- * @author binbin.hou
  * @since 0.0.3
  * @param <K> key
  * @param <V> value
@@ -127,7 +125,7 @@ public class CacheExpire<K,V> implements ICacheExpire<K,V> {
         if(expireAt == null) {
             return;
         }
-
+        //获取当前时间
         long currentTime = System.currentTimeMillis();
         if(currentTime >= expireAt) {
             expireMap.remove(key);

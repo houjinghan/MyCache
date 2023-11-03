@@ -29,7 +29,6 @@ public class CacheLoadAof<K,V> implements ICacheLoad<K,V> {
 
     /**
      * 方法缓存
-     *
      * 暂时比较简单，直接通过方法判断即可，不必引入参数类型增加复杂度。
      * @since 0.0.10
      */
@@ -50,7 +49,6 @@ public class CacheLoadAof<K,V> implements ICacheLoad<K,V> {
                 }
             }
         }
-
     }
 
     /**

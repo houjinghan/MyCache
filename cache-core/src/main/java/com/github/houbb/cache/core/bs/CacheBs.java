@@ -183,6 +183,7 @@ public final class CacheBs<K,V> {
         // 初始化
         cache.init();
         return CacheProxy.getProxy(cache);
+//        return cache;
     }
 
 }

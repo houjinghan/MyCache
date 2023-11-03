@@ -21,8 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存过期-普通策略随机
- *
- * @author binbin.hou
  * @since 0.0.16
  * @param <K> key
  * @param <V> value
@@ -146,6 +144,7 @@ public class CacheExpireRandom<K,V> implements ICacheExpire<K,V> {
         Random random = ThreadLocalRandom.current();
 
         Set<K> keySet = expireMap.keySet();
+
         List<K> list = new ArrayList<>(keySet);
         int randomIndex = random.nextInt(list.size());
         return list.get(randomIndex);
@@ -219,7 +218,6 @@ public class CacheExpireRandom<K,V> implements ICacheExpire<K,V> {
         if(CollectionUtil.isEmpty(keyList)) {
             return;
         }
-
         // 判断大小，小的作为外循环。一般都是过期的 keys 比较小。
         if(keyList.size() <= expireMap.size()) {
             for(K key : keyList) {

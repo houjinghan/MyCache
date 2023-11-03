@@ -54,7 +54,7 @@ public class TokenBucketLimiter {
     public void testLimit() {
 
         // 被限制的次数
-        AtomicInteger limited = new AtomicInteger(0);
+        final AtomicInteger limited = new AtomicInteger(0);
         // 线程数
         final int threads = 2;
         // 每条线程的执行轮数
@@ -62,26 +62,46 @@ public class TokenBucketLimiter {
 
 
         // 同步器
-        CountDownLatch countDownLatch = new CountDownLatch(threads);
+        final CountDownLatch countDownLatch = new CountDownLatch(threads);
         long start = System.currentTimeMillis();
         for (int i = 0; i < threads; i++) {
-            pool.submit(() ->
-            {
-                try {
-                    for (int j = 0; j < turns; j++) {
-                        long taskId = Thread.currentThread().getId();
-                        boolean intercepted = isLimited(taskId, 1);
-                        if (intercepted) {
-                            // 被限制的次数累积
-                            limited.getAndIncrement();
+//            pool.submit(() ->
+//            {
+//                try {
+//                    for (int j = 0; j < turns; j++) {
+//                        long taskId = Thread.currentThread().getId();
+//                        boolean intercepted = isLimited(taskId, 1);
+//                        if (intercepted) {
+//                            // 被限制的次数累积
+//                            limited.getAndIncrement();
+//                        }
+//                        Thread.sleep(200);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                //等待所有线程结束
+//                countDownLatch.countDown();
+//            });
+            pool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (int j = 0; j < turns; j++) {
+                            long taskId = Thread.currentThread().getId();
+                            boolean intercepted = isLimited(taskId, 1);
+                            if (intercepted) {
+                                // 被限制的次数累积
+                                limited.getAndIncrement();
+                            }
+                            Thread.sleep(200);
                         }
-                        Thread.sleep(200);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    //等待所有线程结束
+                    countDownLatch.countDown();
                 }
-                //等待所有线程结束
-                countDownLatch.countDown();
             });
         }
         try {
